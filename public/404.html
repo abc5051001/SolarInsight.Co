@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — SolarInsight</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: #000;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        text-align: center;
+        opacity: 0;
+        animation: fadein 0.6s ease forwards;
+      }
+
+      @keyframes fadein {
+        to { opacity: 1; }
+      }
+
+      p.code {
+        font-family: 'Syne', sans-serif;
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.03em;
+      }
+
+      h1 {
+        margin-top: 1rem;
+        font-family: 'Syne', sans-serif;
+        font-size: clamp(1.25rem, 4vw, 1.75rem);
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.02em;
+      }
+
+      p.sub {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: rgba(255,255,255,0.5);
+        max-width: 320px;
+        line-height: 1.6;
+      }
+
+      .links {
+        margin-top: 1.25rem;
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      a, button.back {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #fff;
+        text-decoration: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        font-family: inherit;
+        transition: color 0.2s;
+      }
+
+      a:hover, button.back:hover { color: #4ADE80; }
+    </style>
+  </head>
+  <body>
+    <p class="code">404</p>
+    <h1>Page not found</h1>
+    <p class="sub">Sorry, we couldn't find the page you're looking for.</p>
+    <div class="links">
+      <button class="back" onclick="history.back()">← Go back</button>
+      <a href="/">Go to the home page</a>
+    </div>
+  </body>
+</html>
