@@ -241,7 +241,7 @@ export default function App() {
           {/* Logo — click to scroll to top */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="flex items-center focus:outline-none"
+            className="flex items-center focus:outline-none cursor-pointer"
             aria-label="Back to top"
           >
             <span className="text-3xl font-extrabold leading-none">
