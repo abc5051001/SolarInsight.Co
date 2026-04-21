@@ -16,6 +16,34 @@ gsap.registerPlugin(ScrollTrigger);
 const TOTAL_FRAMES = 121;
 const ZOOM_FACTOR = 1.0;
 
+function ExploreLink({ label, href }: { readonly label: string; readonly href: string }) {
+  const [cycle, setCycle] = useState(0);
+  return (
+    <Link
+      to={href}
+      className="flex items-stretch gap-1 group"
+      onMouseEnter={() => setCycle((c) => c + 1)}
+      onMouseLeave={() => setCycle((c) => c + 1)}
+    >
+      <div className="flex-1 flex items-center px-8 py-5 bg-white/8 backdrop-blur-[80px] group-hover:bg-white transition-colors duration-300">
+        <span className="font-mono text-[12px] tracking-widest text-white/90 group-hover:text-black transition-colors duration-300">
+          {label}
+        </span>
+      </div>
+      <div className="relative flex items-center justify-center px-5 bg-white/8 backdrop-blur-[80px] group-hover:bg-white transition-colors duration-300 overflow-hidden">
+        {cycle === 0 ? (
+          <ArrowRight className="w-4 h-4 text-white/90 group-hover:text-black transition-colors duration-300" />
+        ) : (
+          <React.Fragment key={cycle}>
+            <ArrowRight className="w-4 h-4 text-white/90 group-hover:text-black transition-colors duration-300 animate-fly-out" />
+            <ArrowRight className="absolute w-4 h-4 text-white/90 group-hover:text-black transition-colors duration-300 animate-fly-in" />
+          </React.Fragment>
+        )}
+      </div>
+    </Link>
+  );
+}
+
 export default function Home() {
   const [arrowCycle, setArrowCycle] = useState(0);
   const [bookOpen, setBookOpen] = useState(false);
@@ -161,7 +189,6 @@ export default function Home() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [isLoaded]);
-
 
   return (
     <>
@@ -407,7 +434,9 @@ export default function Home() {
       {/* CTA strip before footer */}
       <div className="relative z-10 border-t border-white/8 py-20 px-6 text-center">
         <Reveal>
-          <ShinyText className="font-mono text-xs tracking-widest">EXPLORE</ShinyText>
+          <ShinyText className="font-mono text-xs tracking-widest">
+            EXPLORE
+          </ShinyText>
         </Reveal>
         <Reveal delay={0.1}>
           <h2 className="text-[clamp(1.5rem,3vw,2.5rem)] font-medium text-white mt-4 mb-8">
@@ -415,20 +444,14 @@ export default function Home() {
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="grid grid-cols-2 max-w-lg mx-auto gap-3 pointer-events-auto">
             {[
               ["SERVICES", "/services"],
               ["PRICING", "/pricing"],
               ["OUR DATA", "/data"],
               ["ABOUT", "/about"],
             ].map(([label, href]) => (
-              <Link
-                key={label}
-                to={href}
-                className="font-mono text-xs font-bold tracking-widest bg-white text-black px-8 py-4 hover:bg-[#4ADE80] transition-colors duration-300"
-              >
-                {label} →
-              </Link>
+              <ExploreLink key={label} label={label} href={href} />
             ))}
           </div>
         </Reveal>
