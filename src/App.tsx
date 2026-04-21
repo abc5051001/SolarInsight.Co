@@ -52,14 +52,10 @@ export default function App() {
   const requestRef = useRef<number>(0);
 
   const screen3Ref = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
   const { scrollYProgress: screen3Progress } = useScroll({
     target: screen3Ref,
     offset: ["start end", "start start"],
   });
-
-  // Header animation: start moving up after screen 1
-  const headerY = useTransform(scrollY, [0, 500, 800], [0, 0, -150]);
 
   // Finish flattening when it's 80% of the way to the top
   const rotateX = useTransform(screen3Progress, [0, 0.8], [15, 0]);
@@ -237,19 +233,22 @@ export default function App() {
 
         {/* Fixed Header */}
         <motion.header
-          style={{ y: headerY }}
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="fixed top-0 left-1/2 -translate-x-1/2 z-20 w-[90%] flex items-center justify-between pointer-events-auto py-4 md:py-6 lg:py-8"
         >
-          {/* Logo */}
-          <div className="flex items-center">
-            <span className="text-3xl font-extrabold  leading-none">
+          {/* Logo — click to scroll to top */}
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="flex items-center focus:outline-none"
+            aria-label="Back to top"
+          >
+            <span className="text-3xl font-extrabold leading-none">
               <span className="text-white">Solar</span>
               <span className="">Insight</span>
             </span>
-          </div>
+          </button>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-stretch bg-[#1A1A1A]/40 backdrop-blur-[80px]">
