@@ -338,7 +338,7 @@ export default function App() {
         {/* Scrollable Content */}
         <div className="relative z-10 w-full pointer-events-none">
           {/* Screen 1 */}
-          <div className="w-[90%] mx-auto h-screen flex flex-col py-8 md:py-12 lg:py-16 pb-12">
+          <div className="w-[90%] mx-auto h-screen flex flex-col py-8 md:py-12 lg:py-16 pb-32 md:pb-12">
             <main className="flex-1 w-full pointer-events-auto flex flex-col justify-end md:grid md:grid-cols-12 md:grid-rows-[1fr_auto] gap-y-8 md:gap-y-0 md:gap-x-8 pb-8 md:pb-0">
               {/* Left Heading (Bottom Left on Desktop, Top on Mobile) */}
               <div className="md:row-start-2 md:col-start-1 md:col-span-8 flex items-end">
