@@ -94,7 +94,7 @@ export default function Services() {
           onProgress={handleProgress}
           onCanPlay={() => {
             setVideoProgress(100);
-            setTimeout(() => setVideoLoaded(true), 500);
+            setVideoLoaded(true);
           }}
         />
 
