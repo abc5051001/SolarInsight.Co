@@ -30,7 +30,7 @@ export default function BookAuditModal({ open, onClose }: Props) {
         initial={{ opacity: 0, y: 20, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="relative bg-white/8 backdrop-blur-[80px] border border-white/15 rounded-2xl w-full max-w-lg p-8 flex flex-col gap-6 max-h-[80vh] overflow-y-auto"
+        className="relative bg-white/8 backdrop-blur-[80px] border border-white/15 rounded-2xl w-full max-w-lg p-8 flex flex-col gap-6 max-h-[80vh] overflow-y-auto scrollbar-hide"
         onClick={(e) => e.stopPropagation()}
       >
         <button
