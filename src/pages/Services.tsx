@@ -92,7 +92,10 @@ export default function Services() {
           className="absolute w-full h-full object-cover"
           style={{ opacity: 0 }}
           onProgress={handleProgress}
-          onCanPlay={() => setVideoLoaded(true)}
+          onCanPlay={() => {
+            setVideoProgress(100);
+            setTimeout(() => setVideoLoaded(true), 500);
+          }}
         />
 
         {/* Gradient overlays — pointer-events-none so nav stays clickable */}
