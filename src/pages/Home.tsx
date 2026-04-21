@@ -162,47 +162,44 @@ export default function Home() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [isLoaded]);
 
-  // Gyroscope parallax (mobile)
+  // Motion parallax (mobile) — uses accelerometer so it works over HTTP too
   useEffect(() => {
     if (!isLoaded || !canvasRef.current) return;
     if (!("ontouchstart" in window)) return;
     const canvas = canvasRef.current;
 
-    let baseBeta: number | null = null;
-    let baseGamma: number | null = null;
-
-    const handleOrientation = (e: DeviceOrientationEvent) => {
-      if (e.beta === null || e.gamma === null) return;
-      if (baseBeta === null) baseBeta = e.beta;
-      if (baseGamma === null) baseGamma = e.gamma;
-      const x = Math.max(-20, Math.min(20, ((e.gamma - baseGamma) / 30) * 20));
-      const y = Math.max(-20, Math.min(20, ((e.beta - baseBeta) / 30) * 20));
-      gsap.to(canvas, { x: -x, y: -y, duration: 0.6, ease: "power2.out" });
+    const handleMotion = (e: DeviceMotionEvent) => {
+      const g = e.accelerationIncludingGravity;
+      if (!g) return;
+      // gravity component reflects tilt: -9.8..9.8 on each axis
+      const x = Math.max(-22, Math.min(22, ((g.x ?? 0) / 9.8) * 22));
+      const y = Math.max(-22, Math.min(22, ((g.y ?? 0) / 9.8) * 22));
+      gsap.to(canvas, { x, y: -y, duration: 0.8, ease: "power2.out" });
     };
 
-    type DOE = typeof DeviceOrientationEvent & { requestPermission?: () => Promise<string> };
-    const DOEClass = DeviceOrientationEvent as DOE;
+    type DME = typeof DeviceMotionEvent & { requestPermission?: () => Promise<string> };
+    const DMEClass = DeviceMotionEvent as DME;
 
-    if (typeof DOEClass.requestPermission === "function") {
-      // iOS 13+ — must request on a user gesture (touchstart)
-      const requestOnTouch = () => {
-        DOEClass.requestPermission!()
+    if (typeof DMEClass.requestPermission === "function") {
+      // iOS 13+ — request on first touch
+      const onTouch = () => {
+        DMEClass.requestPermission!()
           .then((state) => {
             if (state === "granted") {
-              window.addEventListener("deviceorientation", handleOrientation);
+              window.addEventListener("devicemotion", handleMotion);
             }
           })
           .catch(() => {});
       };
-      window.addEventListener("touchstart", requestOnTouch, { once: true });
+      window.addEventListener("touchstart", onTouch, { once: true });
       return () => {
-        window.removeEventListener("touchstart", requestOnTouch);
-        window.removeEventListener("deviceorientation", handleOrientation);
+        window.removeEventListener("touchstart", onTouch);
+        window.removeEventListener("devicemotion", handleMotion);
       };
     } else {
-      // Android — no permission needed, start immediately
-      window.addEventListener("deviceorientation", handleOrientation);
-      return () => window.removeEventListener("deviceorientation", handleOrientation);
+      // Android — no permission needed
+      window.addEventListener("devicemotion", handleMotion);
+      return () => window.removeEventListener("devicemotion", handleMotion);
     }
   }, [isLoaded]);
 
