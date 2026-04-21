@@ -161,47 +161,6 @@ export default function Home() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [isLoaded]);
 
-  // Tilt parallax (mobile) — requires HTTPS in production, use localtunnel for local testing
-  useEffect(() => {
-    if (!isLoaded || !canvasRef.current) return;
-    if (!("ontouchstart" in window)) return;
-    const canvas = canvasRef.current;
-
-    let baseBeta: number | null = null;
-    let baseGamma: number | null = null;
-
-    const handleOrientation = (e: DeviceOrientationEvent) => {
-      if (e.beta === null || e.gamma === null) return;
-      if (baseBeta === null) baseBeta = e.beta;
-      if (baseGamma === null) baseGamma = e.gamma;
-      const x = Math.max(-20, Math.min(20, ((e.gamma - baseGamma) / 25) * 20));
-      const y = Math.max(-20, Math.min(20, ((e.beta - baseBeta) / 25) * 20));
-      gsap.to(canvas, { x: -x, y: -y, duration: 0.6, ease: "power2.out" });
-    };
-
-    type DOE = typeof DeviceOrientationEvent & { requestPermission?: () => Promise<string> };
-    const DOEClass = DeviceOrientationEvent as DOE;
-
-    if (typeof DOEClass.requestPermission === "function") {
-      // iOS 13+ — permission must be triggered by a user gesture
-      const onTouch = () => {
-        DOEClass.requestPermission!()
-          .then((state) => {
-            if (state === "granted") window.addEventListener("deviceorientation", handleOrientation);
-          })
-          .catch(() => {});
-      };
-      window.addEventListener("touchstart", onTouch, { once: true });
-      return () => {
-        window.removeEventListener("touchstart", onTouch);
-        window.removeEventListener("deviceorientation", handleOrientation);
-      };
-    } else {
-      // Android — fires immediately, no permission needed
-      window.addEventListener("deviceorientation", handleOrientation);
-      return () => window.removeEventListener("deviceorientation", handleOrientation);
-    }
-  }, [isLoaded]);
 
   return (
     <>
