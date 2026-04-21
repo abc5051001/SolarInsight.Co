@@ -901,7 +901,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative bg-[#111] border border-white/10 rounded-2xl w-full max-w-lg p-8 flex flex-col gap-6 max-h-[90vh] overflow-y-auto"
+            className="relative bg-white/8 backdrop-blur-[80px] border border-white/15 rounded-2xl w-full max-w-lg p-8 flex flex-col gap-6 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -981,7 +981,7 @@ export default function App() {
                       onChange={(e) =>
                         setFormData((d) => ({ ...d, [id]: e.target.value }))
                       }
-                      className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#4ADE80]/50 transition-colors"
+                      className="bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-white/40 transition-colors"
                       required={id !== "panels"}
                     />
                   </div>
@@ -1001,7 +1001,7 @@ export default function App() {
                     onChange={(e) =>
                       setFormData((d) => ({ ...d, message: e.target.value }))
                     }
-                    className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#4ADE80]/50 transition-colors resize-none"
+                    className="bg-white/5 border border-white/15 rounded-lg px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-white/40 transition-colors resize-none"
                   />
                 </div>
                 <button
