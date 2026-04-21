@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import BookAuditModal from "./BookAuditModal";
 
 const NAV_LINKS = [
@@ -25,9 +25,9 @@ export default function Nav() {
       >
         <Link
           to="/"
-          className="flex items-center focus:outline-none px-4 py-2 rounded-2xl bg-white/5 backdrop-blur-md border border-white/5 hover:bg-white/15 transition-colors duration-300"
+          className="flex items-center focus:outline-none px-2 py-2 rounded-2xl bg-white/5 backdrop-blur-md border border-white/5 hover:bg-white/15 transition-colors duration-300"
           aria-label="Back to home"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <span className="text-2xl lg:text-3xl font-semibold leading-none text-white">
             SolarInsight
