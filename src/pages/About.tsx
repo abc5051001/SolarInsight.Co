@@ -3,12 +3,18 @@ import Nav from "../components/Nav";
 import BookAuditModal from "../components/BookAuditModal";
 import Footer from "../components/Footer";
 import { Reveal } from "../components/animations";
+import Prism from "../components/ui/Prism";
+import ShinyText from "../components/ui/ShinyText";
+import CountUp from "../components/ui/CountUp";
 
 export default function About() {
   const [bookOpen, setBookOpen] = useState(false);
 
   return (
-    <div className="bg-black text-white font-sans min-h-screen">
+    <div className="relative bg-black text-white font-sans min-h-screen">
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+        <Prism animationType="rotate" timeScale={0.5} height={3.5} baseWidth={5.5} scale={3.6} hueShift={0} colorFrequency={1} noise={0} glow={1} />
+      </div>
       <Nav />
 
       <div className="pt-40 pb-28 px-6">
@@ -16,7 +22,7 @@ export default function About() {
 
           {/* Headline */}
           <Reveal>
-            <span className="font-mono text-xs text-[#4ADE80] tracking-widest">ABOUT</span>
+            <ShinyText className="font-mono text-xs tracking-widest">ABOUT</ShinyText>
             <h1 className="mt-4 text-[clamp(2.5rem,6vw,5rem)] font-medium text-white tracking-tight leading-[1.05]">
               Built in Arlington.<br />For Arlington.
             </h1>
@@ -41,8 +47,8 @@ export default function About() {
             <Reveal delay={0.15}>
               <div className="flex flex-col gap-8">
                 {[
-                  { label: "Founded", value: "2021" },
-                  { label: "Sites monitored", value: "200+" },
+                  { label: "Founded", value: <CountUp to={2021} duration={1.5} /> },
+                  { label: "Sites monitored", value: <><CountUp to={200} duration={1.8} />+</> },
                   { label: "Service area", value: "Arlington · Alexandria · Fairfax" },
                   { label: "Guarantee", value: "100% money-back" },
                 ].map(({ label, value }) => (
@@ -58,7 +64,7 @@ export default function About() {
           {/* Mission */}
           <Reveal delay={0.1}>
             <div className="border border-white/10 p-10 flex flex-col gap-4">
-              <p className="font-mono text-xs text-[#4ADE80] tracking-widest">OUR MISSION</p>
+              <ShinyText className="font-mono text-xs tracking-widest">OUR MISSION</ShinyText>
               <blockquote className="text-[clamp(1.3rem,2.5vw,2rem)] font-medium text-white leading-[1.2]">
                 "Every solar system in Northern Virginia should be performing at its peak — and every homeowner should know exactly how theirs is doing."
               </blockquote>

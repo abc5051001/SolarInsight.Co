@@ -2,6 +2,8 @@ import { useState } from "react";
 import Nav from "../components/Nav";
 import BookAuditModal from "../components/BookAuditModal";
 import Footer from "../components/Footer";
+import LightRays from "../components/ui/LightRays";
+import ShinyText from "../components/ui/ShinyText";
 
 const QUESTIONS = [
   {
@@ -65,13 +67,14 @@ export default function FAQ() {
   const [bookOpen, setBookOpen] = useState(false);
 
   return (
-    <div className="bg-black text-white font-sans min-h-screen">
+    <div className="relative bg-black text-white font-sans min-h-screen">
+      <LightRays raysOrigin="top-center" raysColor="#ffffff" raysSpeed={1} lightSpread={0.5} rayLength={3} followMouse={false} mouseInfluence={0} noiseAmount={0} distortion={0} pulsating={false} fadeDistance={1} saturation={1} />
       <Nav />
 
       <div className="pt-40 pb-28 px-6">
         <div className="max-w-3xl mx-auto flex flex-col gap-16">
           <div>
-            <span className="font-mono text-xs text-[#4ADE80] tracking-widest">FAQ</span>
+            <ShinyText className="font-mono text-xs tracking-widest">FAQ</ShinyText>
             <h1 className="mt-4 text-[clamp(2.5rem,6vw,5rem)] font-medium text-white tracking-tight leading-[1.05]">
               Common questions.
             </h1>
