@@ -23,7 +23,7 @@ export function Reveal({
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: inView ? delay : 0 }}
-      className={className}
+      className={`relative ${className}`}
     >
       {children}
     </motion.div>
@@ -65,7 +65,7 @@ export function ScrollUnreveal({
   }, []);
 
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} className={`relative ${className}`}>
       {children}
     </div>
   );

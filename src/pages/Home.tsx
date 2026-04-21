@@ -175,32 +175,35 @@ export default function Home() {
       if (e.beta === null || e.gamma === null) return;
       if (baseBeta === null) baseBeta = e.beta;
       if (baseGamma === null) baseGamma = e.gamma;
-      const x = Math.max(-20, Math.min(20, ((e.gamma - baseGamma!) / 30) * 20));
-      const y = Math.max(-20, Math.min(20, ((e.beta - baseBeta!) / 30) * 20));
+      const x = Math.max(-20, Math.min(20, ((e.gamma - baseGamma) / 30) * 20));
+      const y = Math.max(-20, Math.min(20, ((e.beta - baseBeta) / 30) * 20));
       gsap.to(canvas, { x: -x, y: -y, duration: 0.6, ease: "power2.out" });
     };
 
-    const startListening = () => {
-      // iOS 13+ requires permission triggered by a user gesture
-      const DOEP = DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> };
-      if (typeof DOEP.requestPermission === "function") {
-        DOEP.requestPermission().then((state) => {
-          if (state === "granted") {
-            window.addEventListener("deviceorientation", handleOrientation);
-          }
-        }).catch(() => {});
-      } else {
-        window.addEventListener("deviceorientation", handleOrientation);
-      }
-      window.removeEventListener("touchstart", startListening);
-    };
+    type DOE = typeof DeviceOrientationEvent & { requestPermission?: () => Promise<string> };
+    const DOEClass = DeviceOrientationEvent as DOE;
 
-    window.addEventListener("touchstart", startListening, { once: true });
-
-    return () => {
-      window.removeEventListener("touchstart", startListening);
-      window.removeEventListener("deviceorientation", handleOrientation);
-    };
+    if (typeof DOEClass.requestPermission === "function") {
+      // iOS 13+ — must request on a user gesture (touchstart)
+      const requestOnTouch = () => {
+        DOEClass.requestPermission!()
+          .then((state) => {
+            if (state === "granted") {
+              window.addEventListener("deviceorientation", handleOrientation);
+            }
+          })
+          .catch(() => {});
+      };
+      window.addEventListener("touchstart", requestOnTouch, { once: true });
+      return () => {
+        window.removeEventListener("touchstart", requestOnTouch);
+        window.removeEventListener("deviceorientation", handleOrientation);
+      };
+    } else {
+      // Android — no permission needed, start immediately
+      window.addEventListener("deviceorientation", handleOrientation);
+      return () => window.removeEventListener("deviceorientation", handleOrientation);
+    }
   }, [isLoaded]);
 
   return (
