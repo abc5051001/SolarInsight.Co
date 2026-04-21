@@ -109,7 +109,8 @@ export default function Home() {
       if (!screen3Ref.current) return;
       const rect = screen3Ref.current.getBoundingClientRect();
       const absoluteTop = window.scrollY + rect.top;
-      const stopScroll = Math.max(1, absoluteTop + window.innerHeight * 0.15);
+      const isMobile = window.innerWidth < 1024;
+      const stopScroll = Math.max(1, absoluteTop + window.innerHeight * (isMobile ? 0.05 : 0.15));
       const scrollFraction = Math.max(
         0,
         Math.min(1, window.scrollY / stopScroll),
