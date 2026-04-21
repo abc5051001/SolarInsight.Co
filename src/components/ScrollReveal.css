@@ -1,5 +1,6 @@
 .scroll-reveal {
   margin: 0;
+  position: relative;
 }
 
 .scroll-reveal-text {
