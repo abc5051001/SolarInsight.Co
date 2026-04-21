@@ -76,36 +76,51 @@ export default function Nav() {
       </motion.header>
 
       {/* Mobile menu */}
-      <motion.div
-        initial={{ opacity: 0, y: -8, pointerEvents: "none" }}
-        animate={
-          menuOpen
-            ? { opacity: 1, y: 0, pointerEvents: "auto" }
-            : { opacity: 0, y: -8, pointerEvents: "none" }
-        }
-        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-        className="lg:hidden fixed top-16 left-4 right-4 z-30 bg-white rounded-2xl shadow-2xl px-6 py-8 flex flex-col gap-5"
-      >
-        {NAV_LINKS.map(([label, href]) => (
-          <Link
-            key={label}
-            to={href}
-            className="font-mono text-sm text-black/70 hover:text-black tracking-widest transition-colors border-b border-black/8 pb-5 last:border-0 last:pb-0"
-            onClick={() => setMenuOpen(false)}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, height: 0, y: -8 }}
+            animate={{ opacity: 1, height: "auto", y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -8 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:hidden fixed top-16 left-4 right-4 z-30 bg-white rounded-2xl shadow-2xl overflow-hidden"
           >
-            {label}
-          </Link>
-        ))}
-        <button
-          className="mt-2 bg-black text-white py-4 font-mono text-xs font-bold tracking-widest hover:bg-gray-800 transition-colors rounded-lg"
-          onClick={() => {
-            setMenuOpen(false);
-            setBookOpen(true);
-          }}
-        >
-          BOOK AUDIT
-        </button>
-      </motion.div>
+            <div className="px-6 py-8 flex flex-col gap-5">
+              {NAV_LINKS.map(([label, href], i) => (
+                <motion.div
+                  key={label}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -8 }}
+                  transition={{ duration: 0.2, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Link
+                    to={href}
+                    className="block font-mono text-sm text-black/70 hover:text-black tracking-widest transition-colors border-b border-black/8 pb-5"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.button
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -8 }}
+                transition={{ duration: 0.2, delay: NAV_LINKS.length * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-2 bg-black text-white py-4 font-mono text-xs font-bold tracking-widest hover:bg-gray-800 transition-colors rounded-lg"
+                onClick={() => {
+                  setMenuOpen(false);
+                  setBookOpen(true);
+                }}
+              >
+                BOOK AUDIT
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <BookAuditModal open={bookOpen} onClose={() => setBookOpen(false)} />
     </>

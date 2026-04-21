@@ -146,9 +146,10 @@ export default function Home() {
     };
   }, [isLoaded]);
 
-  // Mouse parallax
+  // Mouse parallax (desktop)
   useEffect(() => {
     if (!isLoaded || !canvasRef.current) return;
+    if ("ontouchstart" in window) return;
     const canvas = canvasRef.current;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -159,6 +160,47 @@ export default function Home() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [isLoaded]);
+
+  // Gyroscope parallax (mobile)
+  useEffect(() => {
+    if (!isLoaded || !canvasRef.current) return;
+    if (!("ontouchstart" in window)) return;
+    const canvas = canvasRef.current;
+
+    let baseBeta: number | null = null;
+    let baseGamma: number | null = null;
+
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      if (e.beta === null || e.gamma === null) return;
+      if (baseBeta === null) baseBeta = e.beta;
+      if (baseGamma === null) baseGamma = e.gamma;
+      const x = Math.max(-20, Math.min(20, ((e.gamma - baseGamma!) / 30) * 20));
+      const y = Math.max(-20, Math.min(20, ((e.beta - baseBeta!) / 30) * 20));
+      gsap.to(canvas, { x: -x, y: -y, duration: 0.6, ease: "power2.out" });
+    };
+
+    const startListening = () => {
+      // iOS 13+ requires permission triggered by a user gesture
+      const DOEP = DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> };
+      if (typeof DOEP.requestPermission === "function") {
+        DOEP.requestPermission().then((state) => {
+          if (state === "granted") {
+            window.addEventListener("deviceorientation", handleOrientation);
+          }
+        }).catch(() => {});
+      } else {
+        window.addEventListener("deviceorientation", handleOrientation);
+      }
+      window.removeEventListener("touchstart", startListening);
+    };
+
+    window.addEventListener("touchstart", startListening, { once: true });
+
+    return () => {
+      window.removeEventListener("touchstart", startListening);
+      window.removeEventListener("deviceorientation", handleOrientation);
+    };
   }, [isLoaded]);
 
   return (
