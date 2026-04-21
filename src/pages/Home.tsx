@@ -224,7 +224,7 @@ export default function Home() {
               </div>
 
               <div className="md:row-start-2 md:col-start-8 md:col-span-5 flex items-end justify-start md:justify-end">
-                <div className="animate-fade-rise-delay-2">
+                <Reveal delay={0.4}>
                   <Link
                     to="/services"
                     className="flex items-stretch gap-1 group cursor-pointer"
@@ -247,7 +247,7 @@ export default function Home() {
                       )}
                     </div>
                   </Link>
-                </div>
+                </Reveal>
               </div>
             </main>
           </div>
