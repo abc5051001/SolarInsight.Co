@@ -91,41 +91,53 @@ export default function Services() {
       <Nav />
 
       {/* ── HERO ── */}
-      <div className="relative h-screen flex flex-col items-center justify-center text-center px-6 pointer-events-none">
-        <p className="animate-fade-rise font-mono text-xs text-[#4ADE80] tracking-widest mb-6">
-          SERVICES
-        </p>
-        <h1 className="animate-fade-rise text-[clamp(2.8rem,7vw,6rem)] font-medium text-white max-w-4xl tracking-tight leading-[1.05]">
-          Your Panels,
-          <br />
-          <span className="font-normal text-white/65">In Expert Hands.</span>
-        </h1>
-        <p className="animate-fade-rise-delay text-[clamp(1rem,1.5vw,1.2rem)] text-white/60 max-w-xl mt-8 leading-relaxed">
-          Deionized cleaning, thermal inspection, and micro-crack detection —
-          everything your solar investment needs, backed by the most complete
-          local soiling data in Northern Virginia.
-        </p>
-        <button
-          onClick={() => setBookOpen(true)}
-          className="animate-fade-rise-delay-2 pointer-events-auto mt-12 bg-white text-black font-mono text-xs font-bold tracking-widest px-14 py-5 hover:bg-[#4ADE80] transition-colors duration-300"
-        >
-          BOOK A FREE AUDIT
-        </button>
+      <div className="relative h-screen flex flex-col items-center justify-center text-center px-6">
+        <Reveal>
+          <p className="font-mono text-xs text-[#4ADE80] tracking-widest mb-6">
+            SERVICES
+          </p>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h1 className="text-[clamp(2.8rem,7vw,6rem)] font-medium text-white max-w-4xl tracking-tight leading-[1.05]">
+            Your Panels,
+            <br />
+            <span className="font-normal text-white/65">In Expert Hands.</span>
+          </h1>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <p className="text-[clamp(1rem,1.5vw,1.2rem)] text-white/60 max-w-xl mt-8 leading-relaxed">
+            Deionized cleaning, thermal inspection, and micro-crack detection —
+            everything your solar investment needs, backed by the most complete
+            local soiling data in Northern Virginia.
+          </p>
+        </Reveal>
+        <Reveal delay={0.3}>
+          <button
+            onClick={() => setBookOpen(true)}
+            className="mt-12 bg-white text-black font-mono text-xs font-bold tracking-widest px-14 py-5 hover:bg-[#4ADE80] transition-colors duration-300"
+          >
+            BOOK A FREE AUDIT
+          </button>
+        </Reveal>
       </div>
 
       {/* ── SERVICES GRID ── */}
       <section className="relative py-28 px-6">
         <div className="max-w-5xl mx-auto flex flex-col gap-16">
-          <Reveal>
-            <ShinyText className="font-mono text-xs tracking-widest">
-              WHAT WE DO
-            </ShinyText>
-            <h2 className="mt-4 text-[clamp(2rem,4.5vw,3.5rem)] font-medium text-white tracking-tight leading-[1.05]">
-              Everything your panels need.
-              <br />
-              Nothing they don't.
-            </h2>
-          </Reveal>
+          <div>
+            <Reveal>
+              <ShinyText className="font-mono text-xs tracking-widest">
+                WHAT WE DO
+              </ShinyText>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="mt-4 text-[clamp(2rem,4.5vw,3.5rem)] font-medium text-white tracking-tight leading-[1.05]">
+                Everything your panels need.
+                <br />
+                Nothing they don't.
+              </h2>
+            </Reveal>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
@@ -165,25 +177,31 @@ export default function Services() {
             ))}
           </div>
 
-          <Reveal delay={0.2}>
+          <Reveal>
             <div className="border border-white/20 bg-black/30 backdrop-blur-sm p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div>
-                <ShinyText className="font-mono text-xs tracking-widest mb-2 block">
-                  READY TO START?
-                </ShinyText>
-                <h3 className="text-xl font-medium text-white">
-                  Book your free audit today.
-                </h3>
-                <p className="text-white/50 text-sm mt-1">
-                  No cost, no commitment. We assess and advise.
-                </p>
+                <Reveal>
+                  <ShinyText className="font-mono text-xs tracking-widest mb-2 block">
+                    READY TO START?
+                  </ShinyText>
+                </Reveal>
+                <Reveal delay={0.1}>
+                  <h3 className="text-xl font-medium text-white">
+                    Book your free audit today.
+                  </h3>
+                  <p className="text-white/50 text-sm mt-1">
+                    No cost, no commitment. We assess and advise.
+                  </p>
+                </Reveal>
               </div>
-              <button
-                onClick={() => setBookOpen(true)}
-                className="shrink-0 bg-white text-black font-mono text-xs font-bold tracking-widest px-8 py-4 hover:bg-[#4ADE80] transition-colors duration-300"
-              >
-                BOOK FREE AUDIT
-              </button>
+              <Reveal delay={0.2}>
+                <button
+                  onClick={() => setBookOpen(true)}
+                  className="shrink-0 bg-white text-black font-mono text-xs font-bold tracking-widest px-8 py-4 hover:bg-[#4ADE80] transition-colors duration-300"
+                >
+                  BOOK FREE AUDIT
+                </button>
+              </Reveal>
             </div>
           </Reveal>
         </div>

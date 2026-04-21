@@ -9,6 +9,7 @@ import GoogleModelViewer from "../components/GoogleModelViewer";
 import Nav from "../components/Nav";
 import BookAuditModal from "../components/BookAuditModal";
 import { Reveal, ScrollUnreveal } from "../components/animations";
+import ShinyText from "../components/ui/ShinyText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -405,28 +406,32 @@ export default function Home() {
 
       {/* CTA strip before footer */}
       <div className="relative z-10 border-t border-white/8 py-20 px-6 text-center">
-        <p className="font-mono text-xs text-white/40 tracking-widest mb-4">
-          EXPLORE
-        </p>
-        <h2 className="text-[clamp(1.5rem,3vw,2.5rem)] font-medium text-white mb-8">
-          Everything your panels need.
-        </h2>
-        <div className="flex flex-wrap justify-center gap-4">
-          {[
-            ["SERVICES", "/services"],
-            ["PRICING", "/pricing"],
-            ["OUR DATA", "/data"],
-            ["ABOUT", "/about"],
-          ].map(([label, href]) => (
-            <Link
-              key={label}
-              to={href}
-              className="font-mono text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/40 px-6 py-3 transition-colors duration-300"
-            >
-              {label} →
-            </Link>
-          ))}
-        </div>
+        <Reveal>
+          <ShinyText className="font-mono text-xs tracking-widest">EXPLORE</ShinyText>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h2 className="text-[clamp(1.5rem,3vw,2.5rem)] font-medium text-white mt-4 mb-8">
+            Everything your panels need.
+          </h2>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              ["SERVICES", "/services"],
+              ["PRICING", "/pricing"],
+              ["OUR DATA", "/data"],
+              ["ABOUT", "/about"],
+            ].map(([label, href]) => (
+              <Link
+                key={label}
+                to={href}
+                className="font-mono text-xs font-bold tracking-widest bg-white text-black px-8 py-4 hover:bg-[#4ADE80] transition-colors duration-300"
+              >
+                {label} →
+              </Link>
+            ))}
+          </div>
+        </Reveal>
       </div>
 
       <footer className="relative z-10 border-t border-white/8 py-12 px-6">

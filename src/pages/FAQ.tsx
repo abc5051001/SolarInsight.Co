@@ -46,18 +46,18 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   return (
     <div className="border-t border-white/10">
       <button
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpen((o) => !o)}
         className="w-full flex justify-between items-center py-6 text-left gap-4"
       >
         <span className="text-white font-medium text-[15px]">{q}</span>
-        <span className={`text-[#4ADE80] text-xl leading-none shrink-0 transition-transform duration-200 ${open ? "rotate-45" : ""}`}>
+        <span
+          className={`text-[#4ADE80] text-xl leading-none shrink-0 transition-transform duration-200 ${open ? "rotate-45" : ""}`}
+        >
           +
         </span>
       </button>
       {open && (
-        <p className="pb-6 text-white/55 text-[14px] leading-relaxed">
-          {a}
-        </p>
+        <p className="pb-6 text-white/55 text-[14px] leading-relaxed">{a}</p>
       )}
     </div>
   );
@@ -68,13 +68,28 @@ export default function FAQ() {
 
   return (
     <div className="relative bg-black text-white font-sans min-h-screen">
-      <LightRays raysOrigin="top-center" raysColor="#ffffff" raysSpeed={1} lightSpread={0.5} rayLength={3} followMouse={false} mouseInfluence={0} noiseAmount={0} distortion={0} pulsating={false} fadeDistance={1} saturation={1} />
+      <LightRays
+        raysOrigin="top-center"
+        raysColor="#ffffff"
+        raysSpeed={1}
+        lightSpread={0.5}
+        rayLength={3}
+        followMouse={false}
+        mouseInfluence={0}
+        noiseAmount={0}
+        distortion={0}
+        pulsating={false}
+        fadeDistance={1}
+        saturation={1}
+      />
       <Nav />
 
       <div className="pt-40 pb-28 px-6">
         <div className="max-w-3xl mx-auto flex flex-col gap-16">
           <div>
-            <ShinyText className="font-mono text-xs tracking-widest">FAQ</ShinyText>
+            <ShinyText className="font-mono text-xs tracking-widest">
+              FAQ
+            </ShinyText>
             <h1 className="mt-4 text-[clamp(2.5rem,6vw,5rem)] font-medium text-white tracking-tight leading-[1.05]">
               Common questions.
             </h1>
@@ -90,7 +105,9 @@ export default function FAQ() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-t border-white/10 pt-8">
             <div>
               <p className="text-white font-medium">Still have questions?</p>
-              <p className="text-white/40 text-sm mt-1">Book a free audit — we'll walk through everything in person.</p>
+              <p className="text-white/40 text-sm mt-1">
+                Book a free audit — we'll walk through everything in person.
+              </p>
             </div>
             <button
               onClick={() => setBookOpen(true)}
