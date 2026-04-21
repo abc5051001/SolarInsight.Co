@@ -28,7 +28,7 @@ export default function Nav() {
           className="flex items-center focus:outline-none px-4 py-2 rounded-2xl bg-white/5 backdrop-blur-md border border-white/5 hover:bg-white/15 transition-colors duration-300"
           aria-label="Back to home"
         >
-          <span className="text-3xl font-medium leading-none text-white">
+          <span className="text-2xl lg:text-3xl font-semibold leading-none text-white">
             SolarInsight
           </span>
         </Link>
