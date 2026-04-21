@@ -8,7 +8,6 @@ export default function Services() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [bookOpen, setBookOpen] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
 
   // Track buffering progress for the loading screen
@@ -18,7 +17,6 @@ export default function Services() {
     const pct = Math.round(
       (v.buffered.end(v.buffered.length - 1) / v.duration) * 100,
     );
-    setShowLoading(true);
     setVideoProgress(pct);
   };
 
@@ -66,8 +64,8 @@ export default function Services() {
 
   return (
     <div className="bg-black text-white font-sans min-h-screen">
-      {/* Loading screen — only shown when actual buffering is needed */}
-      {showLoading && !videoLoaded && (
+      {/* Loading screen — same style as Home */}
+      {!videoLoaded && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black text-white font-sans z-50">
           <div className="text-[10px] font-mono tracking-widest mb-4 text-white/50">
             LOADING SEQUENCE
@@ -94,14 +92,7 @@ export default function Services() {
           className="absolute w-full h-full object-cover"
           style={{ opacity: 0 }}
           onProgress={handleProgress}
-          onCanPlay={() => {
-            if (showLoading) {
-              setVideoProgress(100);
-              setTimeout(() => setVideoLoaded(true), 500);
-            } else {
-              setVideoLoaded(true);
-            }
-          }}
+          onCanPlay={() => setVideoLoaded(true)}
         />
 
         {/* Gradient overlays — pointer-events-none so nav stays clickable */}
