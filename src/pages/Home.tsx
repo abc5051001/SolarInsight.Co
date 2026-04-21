@@ -110,7 +110,10 @@ export default function Home() {
       const rect = screen3Ref.current.getBoundingClientRect();
       const absoluteTop = window.scrollY + rect.top;
       const isMobile = window.innerWidth < 1024;
-      const stopScroll = Math.max(1, absoluteTop + window.innerHeight * (isMobile ? 0.05 : 0.15));
+      const stopScroll = Math.max(
+        1,
+        absoluteTop + window.innerHeight * (isMobile ? 0.05 : 0.15),
+      );
       const scrollFraction = Math.max(
         0,
         Math.min(1, window.scrollY / stopScroll),
@@ -221,7 +224,7 @@ export default function Home() {
               </div>
 
               <div className="md:row-start-2 md:col-start-8 md:col-span-5 flex items-end justify-start md:justify-end">
-                <Reveal delay={0.4}>
+                <div className="animate-fade-rise-delay-2">
                   <Link
                     to="/services"
                     className="flex items-stretch gap-1 group cursor-pointer"
@@ -244,7 +247,7 @@ export default function Home() {
                       )}
                     </div>
                   </Link>
-                </Reveal>
+                </div>
               </div>
             </main>
           </div>
@@ -319,7 +322,7 @@ export default function Home() {
           </div>
 
           {/* Gap */}
-          <div className="h-[80vh] w-full" />
+          <div className="h-[20vh] w-full" />
 
           {/* Screen 3 — 3D card */}
           <div
