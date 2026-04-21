@@ -50,8 +50,7 @@ export default function Home() {
         setLoadedProgress(Math.round((loadedCount / TOTAL_FRAMES) * 100));
         if (loadedCount === TOTAL_FRAMES) {
           imagesRef.current = images;
-          setLoadedProgress(100);
-          setTimeout(() => setIsLoaded(true), 500);
+          setIsLoaded(true);
         }
       };
       img.onload = handleLoad;
