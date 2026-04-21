@@ -63,8 +63,13 @@ export default function BookAuditModal({ open, onClose }: Props) {
         ) : (
           <form
             className="flex flex-col gap-4"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
+              await fetch("https://formspree.io/f/xzdyjegz", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
+                body: JSON.stringify(formData),
+              });
               setFormSent(true);
             }}
           >
