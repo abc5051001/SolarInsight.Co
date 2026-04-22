@@ -207,7 +207,7 @@ export default function Services() {
         </div>
       </section>
 
-      <Footer onBookAudit={() => setBookOpen(true)} />
+      <Footer onBookAudit={() => setBookOpen(true)} transparent />
       <BookAuditModal open={bookOpen} onClose={() => setBookOpen(false)} />
     </div>
   );
