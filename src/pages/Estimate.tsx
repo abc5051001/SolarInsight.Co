@@ -5,7 +5,7 @@ import BookAuditModal from "../components/BookAuditModal";
 import ShinyText from "../components/ui/ShinyText";
 import { Reveal } from "../components/animations";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "https://solarinsightco-production.up.railway.app";
 
 interface SolarPotential {
   system_kw: number;
