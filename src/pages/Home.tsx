@@ -16,7 +16,13 @@ gsap.registerPlugin(ScrollTrigger);
 const TOTAL_FRAMES = 121;
 const ZOOM_FACTOR = 1.0;
 
-function ExploreLink({ label, href }: { readonly label: string; readonly href: string }) {
+function ExploreLink({
+  label,
+  href,
+}: {
+  readonly label: string;
+  readonly href: string;
+}) {
   const [cycle, setCycle] = useState(0);
   return (
     <Link
@@ -450,6 +456,8 @@ export default function Home() {
               ["PRICING", "/pricing"],
               ["OUR DATA", "/data"],
               ["ABOUT", "/about"],
+              ["ESTIMATE", "/estimate"],
+              ["FAQ", "/faq"],
             ].map(([label, href]) => (
               <ExploreLink key={label} label={label} href={href} />
             ))}
@@ -459,9 +467,13 @@ export default function Home() {
 
       <footer className="relative z-10 border-t border-white/8 py-12 px-6">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-          <span className="text-3xl font-extrabold leading-none text-white">
+          <Link
+            to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="text-3xl font-extrabold leading-none text-white hover:opacity-70 transition-opacity duration-300"
+          >
             SolarInsight
-          </span>
+          </Link>
           <p className="font-mono text-[11px] text-white/30 tracking-widest">
             © 2025 SOLARINSIGHT LLC · ARLINGTON, VA
           </p>

@@ -12,12 +12,9 @@ export default function Footer({ onBookAudit, transparent }: Props) {
         <Link
           to="/"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="flex items-center"
+          className="relative z-10 text-3xl font-extrabold leading-none text-white hover:opacity-70 transition-opacity duration-300"
         >
-          <span className="text-3xl font-extrabold leading-none">
-            <span className="text-white">Solar</span>
-            <span className="text-white">Insight</span>
-          </span>
+          SolarInsight
         </Link>
         <p className="font-mono text-[11px] text-white/30 tracking-widest">
           © 2025 SOLARINSIGHT LLC · ARLINGTON, VA
