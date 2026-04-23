@@ -4,7 +4,7 @@ ELECTRICITY_RATES = {
     "DC": 0.145,
 }
 
-INFLATION_RATE = 0.03  # electricity prices rise ~3%/yr historically
+INFLATION_RATE = 0.056  # Arlington/NoVA avg: ~24% rise over 4 years (2020-2024)
 
 def calculate_solar_potential(
     solar_data: dict,
@@ -24,8 +24,10 @@ def calculate_solar_potential(
         electricity_rate = ELECTRICITY_RATES.get(state, 0.135)
 
     matching   = next((c for c in configs if c["panelsCount"] == panel_count), None)
+    panels_note = None
     if matching is None:
         matching = min(configs, key=lambda c: abs(c["panelsCount"] - panel_count))
+        panels_note = f"No exact data for {panel_count} panel{'s' if panel_count != 1 else ''}. Estimate based on the closest available configuration ({matching['panelsCount']} panels)."
     annual_kwh = matching["yearlyEnergyDcKwh"] if matching else 0
 
     soiling_kwh_lost    = annual_kwh * 0.20
@@ -55,4 +57,5 @@ def calculate_solar_potential(
         "recommended_cleanings": recommended_cleanings,
         "cleaning_cost":         cleaning_cost,
         "cleaning_roi":          cleaning_roi,
+        "panels_note":           panels_note,
     }

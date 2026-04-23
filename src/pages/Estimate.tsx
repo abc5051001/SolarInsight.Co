@@ -20,6 +20,7 @@ interface SolarPotential {
   cleaning_cost: number;
   cleaning_roi: number;
   lifetime_soiling_usd: number;
+  panels_note: string | null;
 }
 
 interface EstimateResult {
@@ -212,6 +213,14 @@ export default function Estimate() {
                   </p>
                 </div>
 
+                {/* Panel count note */}
+                {sp.panels_note && (
+                  <div className="px-8 py-3 bg-white/5 border-b border-white/10 flex items-center gap-2">
+                    <span className="text-white/40 text-[11px]">ⓘ</span>
+                    <p className="font-mono text-[10px] text-white/40 tracking-wide">{sp.panels_note}</p>
+                  </div>
+                )}
+
                 {/* Stats row */}
                 <div className="grid grid-cols-3 divide-x divide-white/10 border-b border-white/10">
                   <MiniStat label="ANNUAL PRODUCTION" value={`${sp.annual_kwh.toLocaleString()} kWh`} />
@@ -226,7 +235,7 @@ export default function Estimate() {
                       SOILING COST TREND — 20 YEARS
                     </p>
                     <p className="font-mono text-[10px] text-white/25">
-                      includes 3% annual electricity inflation
+                      5.6% annual rate (NoVA avg 2020–2024)
                     </p>
                   </div>
                   <div className="flex items-end gap-0.75 h-20">
