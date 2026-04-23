@@ -7,7 +7,7 @@ const NAV_LINKS = [
   ["SERVICES", "/services"],
   ["PRICING", "/pricing"],
   ["OUR DATA", "/data"],
-  ["ABOUT", "/about"],
+  ["ESTIMATE", "/estimate"],
   ["FAQ", "/faq"],
 ];
 
