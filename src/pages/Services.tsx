@@ -79,7 +79,7 @@ export default function Services() {
             LOADING SEQUENCE
           </div>
           <div className="text-4xl font-mono">{videoProgress}%</div>
-          <div className="w-64 h-px bg-white/10 mt-8 overflow-hidden">
+          <div className="w-64 h-[1px] bg-white/10 mt-8 overflow-hidden">
             <div
               className="h-full bg-white transition-all duration-300 ease-out"
               style={{ width: `${videoProgress}%` }}

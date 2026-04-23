@@ -24,6 +24,8 @@ def calculate_solar_potential(
         electricity_rate = ELECTRICITY_RATES.get(state, 0.135)
 
     matching   = next((c for c in configs if c["panelsCount"] == panel_count), None)
+    if matching is None:
+        matching = min(configs, key=lambda c: abs(c["panelsCount"] - panel_count))
     annual_kwh = matching["yearlyEnergyDcKwh"] if matching else 0
 
     soiling_kwh_lost    = annual_kwh * 0.20

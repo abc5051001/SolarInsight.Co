@@ -57,7 +57,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
         </span>
       </button>
       {open && (
-        <p className="pb-6 text-white/55 text-[14px] leading-relaxed">{a}</p>
+        <p className="pb-6 text-white/75 text-[14px] leading-relaxed">{a}</p>
       )}
     </div>
   );
@@ -84,7 +84,7 @@ export default function FAQ() {
       />
       <Nav />
 
-      <div className="pt-40 pb-28 px-6">
+      <div className="relative z-10 pt-40 pb-28 px-6">
         <div className="max-w-3xl mx-auto flex flex-col gap-16">
           <div>
             <ShinyText className="font-mono text-xs tracking-widest">
@@ -105,7 +105,7 @@ export default function FAQ() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-t border-white/10 pt-8">
             <div>
               <p className="text-white font-medium">Still have questions?</p>
-              <p className="text-white/40 text-sm mt-1">
+              <p className="text-white/65 text-sm mt-1">
                 Book a free audit — we'll walk through everything in person.
               </p>
             </div>

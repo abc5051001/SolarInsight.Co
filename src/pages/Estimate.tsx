@@ -2,6 +2,7 @@ import { useState } from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import BookAuditModal from "../components/BookAuditModal";
+import LightRays from "../components/ui/LightRays";
 import ShinyText from "../components/ui/ShinyText";
 import { Reveal } from "../components/animations";
 
@@ -77,6 +78,7 @@ export default function Estimate() {
 
   return (
     <div className="relative bg-black text-white font-sans min-h-screen">
+      <LightRays raysOrigin="top-center" raysColor="#ffffff" raysSpeed={1} lightSpread={0.5} rayLength={3} followMouse={false} mouseInfluence={0} noiseAmount={0} distortion={0} pulsating={false} fadeDistance={1} saturation={1} />
       <Nav />
 
       <div className="pt-40 pb-28 px-6">
