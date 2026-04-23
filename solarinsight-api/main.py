@@ -31,7 +31,7 @@ async def check_address(body: AddressRequest):
     lat = geocoded_data["results"][0]["geometry"]["location"]["lat"]
     lng = geocoded_data["results"][0]["geometry"]["location"]["lng"]
     solar_data = await fetch_solar_data(lat, lng)
-    solar_potential = calculate_solar_potential(solar_data, body.panel_count, body.monthly_bill, body.bill_is_pre_solar)
+    solar_potential = calculate_solar_potential(solar_data, body.panel_count, body.electricity_rate)
     return {
         "address": body.address,
         "solar_potential": solar_potential,

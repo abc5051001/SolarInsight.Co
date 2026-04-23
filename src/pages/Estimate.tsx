@@ -13,6 +13,7 @@ interface SolarPotential {
   annual_kwh: number;
   electricity_rate: number;
   rate_source: string;
+  soiling_rate: number;
   soiling_kwh_lost: number;
   soiling_dollar_lost: number;
   yearly_soiling: number[];
@@ -32,8 +33,7 @@ export default function Estimate() {
   const [bookOpen, setBookOpen] = useState(false);
   const [address, setAddress] = useState("");
   const [panelCount, setPanelCount] = useState("");
-  const [monthlyBill, setMonthlyBill] = useState("");
-  const [billIsPreSolar, setBillIsPreSolar] = useState(true);
+  const [electricityRate, setElectricityRate] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<EstimateResult | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -48,11 +48,10 @@ export default function Estimate() {
     try {
       const body: Record<string, unknown> = {
         address,
-        panel_count: parseInt(panelCount),
+        panel_count: Number.parseInt(panelCount),
       };
-      if (monthlyBill) {
-        body.monthly_bill = parseInt(monthlyBill);
-        body.bill_is_pre_solar = billIsPreSolar;
+      if (electricityRate) {
+        body.electricity_rate = Number.parseFloat(electricityRate);
       }
 
       const res = await fetch(`${API_URL}/check_address`, {
@@ -76,13 +75,14 @@ export default function Estimate() {
   const cleaningCost = cleanings * 225;
   const roi = sp ? Math.round((sp.soiling_dollar_lost - cleaningCost) * 100) / 100 : 0;
   const roiPositive = roi >= 0;
+  const soilingPct = sp ? Math.round(sp.soiling_rate * 100) : 0;
 
   return (
     <div className="relative bg-black text-white font-sans min-h-screen">
       <LightRays raysOrigin="top-center" raysColor="#ffffff" raysSpeed={1} lightSpread={0.5} rayLength={3} followMouse={false} mouseInfluence={0} noiseAmount={0} distortion={0} pulsating={false} fadeDistance={1} saturation={1} />
       <Nav />
 
-      <div className="pt-40 pb-28 px-6">
+      <div className="relative z-10 pt-40 pb-28 px-6">
         <div className="max-w-2xl mx-auto flex flex-col gap-16">
 
           {/* Header */}
@@ -101,8 +101,7 @@ export default function Estimate() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="mt-6 text-white/50 text-sm leading-relaxed max-w-lg">
-                Enter your address and panel count. We'll calculate how much energy
-                you're losing to soiling and whether cleaning pays off.
+                Enter your address and panel count. We'll pull your system's actual solar data and show you exactly what soiling is stealing.
               </p>
             </Reveal>
           </div>
@@ -139,41 +138,25 @@ export default function Estimate() {
                 />
               </div>
 
-              <div className="border border-white/8 p-5 flex flex-col gap-4">
+              <div className="border border-white/8 p-5 flex flex-col gap-3">
                 <p className="font-mono text-[11px] text-white/40 tracking-widest">
-                  OPTIONAL — ELECTRICITY BILL
+                  OPTIONAL — ELECTRICITY RATE
                 </p>
-                <input
-                  type="number"
-                  value={monthlyBill}
-                  onChange={(e) => setMonthlyBill(e.target.value)}
-                  placeholder="Monthly bill in USD (e.g. 150)"
-                  min="1"
-                  className="bg-white/5 border border-white/10 text-white placeholder-white/20 px-4 py-4 font-mono text-sm focus:outline-none focus:border-[#4ADE80] transition-colors"
-                />
-                {monthlyBill && (
-                  <div className="flex items-center gap-4">
-                    <label className="font-mono text-[11px] text-white/40 tracking-widest">
-                      THIS BILL IS:
-                    </label>
-                    <div className="flex gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setBillIsPreSolar(true)}
-                        className={`font-mono text-[11px] tracking-widest px-4 py-2 border transition-colors ${billIsPreSolar ? "border-[#4ADE80] text-[#4ADE80]" : "border-white/20 text-white/40"}`}
-                      >
-                        PRE-SOLAR
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setBillIsPreSolar(false)}
-                        className={`font-mono text-[11px] tracking-widest px-4 py-2 border transition-colors ${!billIsPreSolar ? "border-[#4ADE80] text-[#4ADE80]" : "border-white/20 text-white/40"}`}
-                      >
-                        POST-SOLAR
-                      </button>
-                    </div>
-                  </div>
-                )}
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={electricityRate}
+                    onChange={(e) => setElectricityRate(e.target.value)}
+                    placeholder="0.14"
+                    min="0.01"
+                    step="0.001"
+                    className="w-full bg-white/5 border border-white/10 text-white placeholder-white/20 px-4 py-4 font-mono text-sm focus:outline-none focus:border-[#4ADE80] transition-colors"
+                  />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 font-mono text-[11px] text-white/30">$/kWh</span>
+                </div>
+                <p className="font-mono text-[10px] text-white/25 tracking-wide">
+                  Found on your Dominion Energy bill under "Energy Charge". Defaults to regional average if left blank.
+                </p>
               </div>
 
               <button
@@ -209,7 +192,7 @@ export default function Estimate() {
                     That's <span className="text-white">${sp.soiling_dollar_lost}/yr</span> in lost electricity production from your {sp.system_kw} kW system — money your panels are generating but soiling is stealing.
                   </p>
                   <p className="font-mono text-[10px] text-white/25 tracking-widest mt-2">
-                    {sp.rate_source === "user_bill" ? "PERSONALIZED RATE" : "REGIONAL AVERAGE RATE"} · {result?.address}
+                    {sp.rate_source === "user_rate" ? "YOUR RATE" : "REGIONAL AVERAGE RATE"} · {result?.address}
                   </p>
                 </div>
 
@@ -225,7 +208,7 @@ export default function Estimate() {
                 <div className="grid grid-cols-3 divide-x divide-white/10 border-b border-white/10">
                   <MiniStat label="ANNUAL PRODUCTION" value={`${sp.annual_kwh.toLocaleString()} kWh`} />
                   <MiniStat label="LOST TO SOILING" value={`${sp.soiling_kwh_lost.toLocaleString()} kWh`} accent />
-                  <MiniStat label="SOILING RATE" value="18% / yr" />
+                  <MiniStat label="SOILING RATE" value={`${soilingPct}% / yr`} />
                 </div>
 
                 {/* Soiling cost trend chart */}
@@ -306,12 +289,12 @@ export default function Estimate() {
                   <div className="flex flex-col gap-1">
                     <p className="font-mono text-[10px] tracking-widest text-white/40">NET ROI / YEAR</p>
                     <p className={`text-4xl font-medium ${roiPositive ? "text-[#4ADE80]" : "text-white/60"}`}>
-                      {roiPositive ? "+" : ""}${Math.abs(roi)}
+                      {roiPositive ? "+" : "-"}${Math.abs(roi)}
                     </p>
                     <p className="text-white/35 text-xs mt-1">
                       {roiPositive
                         ? "Cleaning pays for itself — and then some."
-                        : `Try 1× / year — cleaning still protects panel longevity and warranty.`}
+                        : "Try 1× / year, or see panel longevity benefits below."}
                     </p>
                   </div>
                   <button
@@ -320,6 +303,25 @@ export default function Estimate() {
                   >
                     BOOK FREE AUDIT
                   </button>
+                </div>
+
+                {/* Panel longevity section */}
+                <div className="px-8 py-6 border-t border-white/10 flex flex-col gap-4 bg-white/2">
+                  <p className="font-mono text-[10px] tracking-widest text-white/40">BEYOND THE NUMBERS</p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-white text-sm font-medium">Warranty Protection</p>
+                      <p className="text-white/45 text-[12px] leading-relaxed">Most manufacturers require periodic cleaning to keep your 25-year warranty valid.</p>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <p className="text-white text-sm font-medium">Slower Degradation</p>
+                      <p className="text-white/45 text-[12px] leading-relaxed">Soiling-induced hot spots accelerate cell degradation by up to 2× — shortening effective panel life.</p>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <p className="text-white text-sm font-medium">Early Fault Detection</p>
+                      <p className="text-white/45 text-[12px] leading-relaxed">Every visit includes a visual inspection. We catch inverter faults and micro-cracks before they compound.</p>
+                    </div>
+                  </div>
                 </div>
 
               </div>

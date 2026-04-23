@@ -5,35 +5,36 @@ ELECTRICITY_RATES = {
 }
 
 INFLATION_RATE = 0.056  # Arlington/NoVA avg: ~24% rise over 4 years (2020-2024)
+SOILING_RATE   = 0.20   # Northern Virginia: heavy pollen + summer dust
 
 def calculate_solar_potential(
     solar_data: dict,
     panel_count: int,
-    monthly_bill: int = None,
-    bill_is_pre_solar: bool = True,
+    electricity_rate: float = None,
 ) -> dict:
-    state    = solar_data["administrativeArea"]
-    analyses = solar_data["solarPotential"]["financialAnalyses"]
-    configs  = solar_data["solarPotential"]["solarPanelConfigs"]
+    state   = solar_data["administrativeArea"]
+    configs = solar_data["solarPotential"]["solarPanelConfigs"]
 
-    if monthly_bill and bill_is_pre_solar:
-        valid    = [a for a in analyses if "financialDetails" in a]
-        scenario = min(valid, key=lambda a: abs(int(a["monthlyBill"]["units"]) - monthly_bill))
-        electricity_rate = monthly_bill / scenario["averageKwhPerMonth"]
+    if electricity_rate:
+        rate        = electricity_rate
+        rate_source = "user_rate"
     else:
-        electricity_rate = ELECTRICITY_RATES.get(state, 0.135)
+        rate        = ELECTRICITY_RATES.get(state, 0.135)
+        rate_source = "regional_average"
 
-    matching   = next((c for c in configs if c["panelsCount"] == panel_count), None)
+    matching    = next((c for c in configs if c["panelsCount"] == panel_count), None)
     panels_note = None
     if matching is None:
-        matching = min(configs, key=lambda c: abs(c["panelsCount"] - panel_count))
-        panels_note = f"No exact data for {panel_count} panel{'s' if panel_count != 1 else ''}. Estimate based on the closest available configuration ({matching['panelsCount']} panels)."
+        matching    = min(configs, key=lambda c: abs(c["panelsCount"] - panel_count))
+        panels_note = (
+            f"No exact data for {panel_count} panel{'s' if panel_count != 1 else ''}. "
+            f"Estimate based on the closest available configuration ({matching['panelsCount']} panels)."
+        )
     annual_kwh = matching["yearlyEnergyDcKwh"] if matching else 0
 
-    soiling_kwh_lost    = annual_kwh * 0.20
-    soiling_dollar_lost = soiling_kwh_lost * electricity_rate
+    soiling_kwh_lost    = annual_kwh * SOILING_RATE
+    soiling_dollar_lost = round(soiling_kwh_lost * rate, 2)
 
-    # Year-by-year soiling cost compounded with electricity inflation
     yearly_soiling = [
         round(soiling_dollar_lost * (1 + INFLATION_RATE) ** year, 2)
         for year in range(20)
@@ -48,10 +49,11 @@ def calculate_solar_potential(
     return {
         "system_kw":             round(system_kw, 2),
         "annual_kwh":            round(annual_kwh, 2),
-        "electricity_rate":      round(electricity_rate, 4),
-        "rate_source":           "user_bill" if (monthly_bill and bill_is_pre_solar) else "regional_average",
+        "electricity_rate":      round(rate, 4),
+        "rate_source":           rate_source,
+        "soiling_rate":          SOILING_RATE,
         "soiling_kwh_lost":      round(soiling_kwh_lost, 2),
-        "soiling_dollar_lost":   round(soiling_dollar_lost, 2),
+        "soiling_dollar_lost":   soiling_dollar_lost,
         "yearly_soiling":        yearly_soiling,
         "lifetime_soiling_usd":  lifetime_soiling_usd,
         "recommended_cleanings": recommended_cleanings,
