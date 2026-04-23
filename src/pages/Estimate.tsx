@@ -75,7 +75,7 @@ export default function Estimate() {
   const cleaningCost = cleanings * 225;
   const roi = sp ? Math.round((sp.soiling_dollar_lost - cleaningCost) * 100) / 100 : 0;
   const roiPositive = roi >= 0;
-  const soilingPct = sp ? Math.round(sp.soiling_rate * 100) : 0;
+  const soilingPct = sp ? Math.round((sp.soiling_rate ?? 0.2) * 100) : 0;
 
   return (
     <div className="relative bg-black text-white font-sans min-h-screen">
