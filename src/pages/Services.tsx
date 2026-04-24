@@ -10,15 +10,32 @@ export default function Services() {
   const [bookOpen, setBookOpen] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
+  const canPlayRef = useRef(false);
 
-  const handleProgress = () => {
-    const v = videoRef.current;
-    if (!v || !v.duration || v.buffered.length === 0) return;
-    const pct = Math.round(
-      (v.buffered.end(v.buffered.length - 1) / v.duration) * 100,
-    );
-    setVideoProgress(pct);
-  };
+  // Animate counter 0→99% over ~2s (matches Home's 121-frame feel),
+  // then snap to 100% once the video is actually ready.
+  useEffect(() => {
+    const DURATION = 2000;
+    let start: number | null = null;
+    let rafId: number;
+
+    const tick = (timestamp: number) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(Math.round((elapsed / DURATION) * 100), 99);
+      setVideoProgress(progress);
+
+      if (progress < 99 || !canPlayRef.current) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        setVideoProgress(100);
+        setVideoLoaded(true);
+      }
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -63,11 +80,7 @@ export default function Services() {
         preload="auto"
         className="fixed inset-0 w-full h-full object-cover -z-10"
         style={{ opacity: 0 }}
-        onProgress={handleProgress}
-        onCanPlay={() => {
-          setVideoProgress(100);
-          setVideoLoaded(true);
-        }}
+        onCanPlay={() => { canPlayRef.current = true; }}
       />
       {/* Subtle dark overlay for readability across full page */}
       <div className="fixed inset-0 -z-10 bg-black/45 pointer-events-none" />
