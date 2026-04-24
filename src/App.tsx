@@ -6,7 +6,8 @@ import Pricing  from "./pages/Pricing";
 import OurData  from "./pages/OurData";
 import About    from "./pages/About";
 import FAQ      from "./pages/FAQ";
-import Estimate from "./pages/Estimate";
+import Estimate  from "./pages/Estimate";
+import NotFound  from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
       <Route path="/about"    element={<About />} />
       <Route path="/faq"      element={<FAQ />} />
       <Route path="/estimate" element={<Estimate />} />
+      <Route path="*"         element={<NotFound />} />
     </Routes>
     </>
   );

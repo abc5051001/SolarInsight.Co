@@ -247,12 +247,12 @@ export default function Home() {
                 <ScrollUnreveal>
                   <Reveal delay={0.3}>
                     <p className="text-[clamp(1rem,1.6vw,1.375rem)] text-white/64 leading-[1.3] font-normal max-w-[460px]">
-                      Your $25,000 solar system is losing{" "}
+                      Your $25,000 solar system loses{" "}
                       <span className="font-semibold text-white">
                         $400–$600 a year
                       </span>{" "}
-                      to soiling. We recover that production — and prove it with
-                      before-and-after data.
+                      to dirt and pollen. We professionally clean your panels
+                      to get it back — and keep them performing at their best.
                     </p>
                   </Reveal>
                 </ScrollUnreveal>
@@ -350,14 +350,14 @@ export default function Home() {
                   className="md:col-span-4 flex flex-col gap-4"
                 >
                   <h3 className="text-xl font-medium text-white">
-                    Data-Backed
+                    Rooted in
                     <br />
-                    Local Authority
+                    Local Knowledge
                   </h3>
                   <p className="text-[15px] text-white/80 leading-relaxed">
-                    Every job feeds our proprietary soiling dataset for Northern
-                    Virginia — published annually and used by local installers
-                    and homeowners alike.
+                    We track seasonal pollen cycles, pollution patterns, and
+                    weather data across the DMV — so every recommendation we
+                    make is specific to this region, not generic advice.
                   </p>
                 </Reveal>
               </div>

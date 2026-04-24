@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface GoogleModelViewerProps {
   src: string;
@@ -15,7 +15,7 @@ interface GoogleModelViewerProps {
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'model-viewer': any;
+      "model-viewer": any;
     }
   }
 }
@@ -26,9 +26,9 @@ const GoogleModelViewer: React.FC<GoogleModelViewerProps> = ({
   autoRotate = true,
   cameraControls = true,
   shadowIntensity = 1,
-  environmentImage = 'neutral',
+  environmentImage = "neutral",
   exposure = 1,
-  className = "w-full h-full"
+  className = "w-full h-full",
 }) => {
   return (
     <div className={className}>
@@ -48,9 +48,15 @@ const GoogleModelViewer: React.FC<GoogleModelViewerProps> = ({
         interaction-prompt="none"
         ar-status="not-presenting"
         loading="eager"
-        style={{ width: '100%', height: '100%', backgroundColor: 'transparent', '--poster-color': 'transparent' } as any}
-      >
-      </model-viewer>
+        style={
+          {
+            width: "100%",
+            height: "100%",
+            backgroundColor: "transparent",
+            "--poster-color": "transparent",
+          } as any
+        }
+      ></model-viewer>
     </div>
   );
 };
