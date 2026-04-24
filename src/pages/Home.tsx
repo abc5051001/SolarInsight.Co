@@ -247,12 +247,12 @@ export default function Home() {
                 <ScrollUnreveal>
                   <Reveal delay={0.3}>
                     <p className="text-[clamp(1rem,1.6vw,1.375rem)] text-white/64 leading-[1.3] font-normal max-w-[460px]">
-                      Your solar system is a $25,000 investment. We maintain,
-                      monitor, and protect it —{" "}
+                      Your $25,000 solar system is losing{" "}
                       <span className="font-semibold text-white">
-                        backed by the most complete local soiling data in
-                        Northern Virginia.
-                      </span>
+                        $400–$600 a year
+                      </span>{" "}
+                      to soiling. We recover that production — and prove it with
+                      before-and-after data.
                     </p>
                   </Reveal>
                 </ScrollUnreveal>
@@ -260,28 +260,36 @@ export default function Home() {
 
               <div className="md:row-start-2 md:col-start-8 md:col-span-5 flex items-end justify-start md:justify-end">
                 <Reveal delay={0.4}>
-                  <Link
-                    to="/services"
-                    className="flex items-stretch gap-1 group cursor-pointer"
-                    onMouseEnter={() => setArrowCycle((c) => c + 1)}
-                    onMouseLeave={() => setArrowCycle((c) => c + 1)}
-                  >
-                    <div className="flex items-center px-8 py-5 bg-white/8 backdrop-blur-[80px] group-hover:bg-white transition-colors duration-300">
-                      <span className="font-mono text-[12px] tracking-[-0.01em] text-white/90 group-hover:text-black transition-colors duration-300">
-                        CHECK OUR SERVICES
-                      </span>
-                    </div>
-                    <div className="relative flex items-center justify-center px-6 bg-white/8 backdrop-blur-[80px] group-hover:bg-white transition-colors duration-300 overflow-hidden">
-                      {arrowCycle === 0 ? (
-                        <ArrowRight className="w-5 h-5 text-white/90 group-hover:text-black transition-colors duration-300" />
-                      ) : (
-                        <React.Fragment key={arrowCycle}>
-                          <ArrowRight className="w-5 h-5 text-white/90 group-hover:text-black transition-colors duration-300 animate-fly-out" />
-                          <ArrowRight className="absolute w-5 h-5 text-white/90 group-hover:text-black transition-colors duration-300 animate-fly-in" />
-                        </React.Fragment>
-                      )}
-                    </div>
-                  </Link>
+                  <div className="flex flex-col items-start md:items-end gap-3">
+                    <Link
+                      to="/estimate"
+                      className="flex items-stretch gap-1 group cursor-pointer"
+                      onMouseEnter={() => setArrowCycle((c) => c + 1)}
+                      onMouseLeave={() => setArrowCycle((c) => c + 1)}
+                    >
+                      <div className="flex items-center px-8 py-5 bg-white backdrop-blur-[80px] group-hover:bg-[#4ADE80] transition-colors duration-300">
+                        <span className="font-mono text-[12px] tracking-[-0.01em] text-black transition-colors duration-300">
+                          GET FREE ESTIMATE
+                        </span>
+                      </div>
+                      <div className="relative flex items-center justify-center px-6 bg-white backdrop-blur-[80px] group-hover:bg-[#4ADE80] transition-colors duration-300 overflow-hidden">
+                        {arrowCycle === 0 ? (
+                          <ArrowRight className="w-5 h-5 text-black transition-colors duration-300" />
+                        ) : (
+                          <React.Fragment key={arrowCycle}>
+                            <ArrowRight className="w-5 h-5 text-black transition-colors duration-300 animate-fly-out" />
+                            <ArrowRight className="absolute w-5 h-5 text-black transition-colors duration-300 animate-fly-in" />
+                          </React.Fragment>
+                        )}
+                      </div>
+                    </Link>
+                    <Link
+                      to="/services"
+                      className="font-mono text-[11px] tracking-widest text-white/80 hover:text-white transition-colors duration-300"
+                    >
+                      VIEW SERVICES →
+                    </Link>
+                  </div>
                 </Reveal>
               </div>
             </main>
@@ -300,9 +308,9 @@ export default function Home() {
                 blurStrength={4}
                 textClassName="text-[clamp(1.5rem,4vw,4rem)] leading-[0.85] font-medium text-white w-full"
               >
-                Neglect Makes Panels Degrade 3× Faster. Hot-Spots Void
-                Warranties. We Maintain, Inspect, And Document — So You Never
-                Find Out The Hard Way.
+                Soiling Steals $400–$600 A Year From The Average NoVA Home.
+                Neglect Makes Panels Degrade 3× Faster. We Recover That Money —
+                And Prove It With Before-And-After Data.
               </ScrollReveal>
 
               <div className="mt-24 grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
@@ -357,12 +365,12 @@ export default function Home() {
           </div>
 
           {/* Gap */}
-          <div className="h-[20vh] w-full" />
+          <div className="h-[30vh] w-full" />
 
           {/* Screen 3 — 3D card */}
           <div
             ref={screen3Ref}
-            className="w-full h-[300vh] pointer-events-auto relative"
+            className="w-full h-[80vh] pointer-events-auto relative"
           >
             <div
               className="sticky top-0 w-full h-screen flex items-start justify-center overflow-hidden"
@@ -434,11 +442,12 @@ export default function Home() {
               </motion.div>
             </div>
           </div>
+          <div className="h-[20vh] w-full" />
         </div>
       </div>
 
       {/* CTA strip before footer */}
-      <div className="relative z-10 border-t border-white/8 py-20 px-6 text-center">
+      <div className="relative z-10 border-t border-white/10 py-20 px-6 text-center">
         <Reveal>
           <ShinyText className="font-mono text-xs tracking-widest">
             EXPLORE
@@ -450,17 +459,62 @@ export default function Home() {
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
-          <div className="grid grid-cols-2 max-w-lg mx-auto gap-3 pointer-events-auto">
-            {[
-              ["SERVICES", "/services"],
-              ["PRICING", "/pricing"],
-              ["OUR DATA", "/data"],
-              ["ABOUT", "/about"],
-              ["ESTIMATE", "/estimate"],
-              ["FAQ", "/faq"],
-            ].map(([label, href]) => (
-              <ExploreLink key={label} label={label} href={href} />
-            ))}
+          <div className="max-w-2xl mx-auto flex flex-col gap-4 pointer-events-auto">
+            {/* Two primary action boxes */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Link
+                to="/services"
+                className="group border border-white/20 bg-black/30 backdrop-blur-sm p-7 flex flex-col justify-between gap-6 text-left hover:border-white/40 transition-colors duration-300"
+              >
+                <div>
+                  <p className="font-mono text-[10px] tracking-widest text-white/40 mb-3">
+                    WHAT WE DO
+                  </p>
+                  <h3 className="text-lg font-medium text-white">
+                    Check our services.
+                  </h3>
+                  <p className="text-white/50 text-sm mt-2 leading-relaxed">
+                    Cleaning, thermal inspection, micro-crack detection, and
+                    gutter clearance.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest text-white/50 group-hover:text-white transition-colors duration-300">
+                  VIEW SERVICES <ArrowRight className="w-3 h-3" />
+                </div>
+              </Link>
+
+              <Link
+                to="/estimate"
+                className="group border border-[#4ADE80]/40 bg-black/30 backdrop-blur-sm p-7 flex flex-col justify-between gap-6 text-left hover:border-[#4ADE80]/70 hover:bg-[#4ADE80]/5 transition-colors duration-300"
+              >
+                <div>
+                  <p className="font-mono text-[10px] tracking-widest text-[#4ADE80]/70 mb-3">
+                    FREE ESTIMATE
+                  </p>
+                  <h3 className="text-lg font-medium text-white">
+                    See what soiling costs you.
+                  </h3>
+                  <p className="text-white/50 text-sm mt-2 leading-relaxed">
+                    Your address. Your panels. Your exact annual dollar loss.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest text-[#4ADE80]/60 group-hover:text-[#4ADE80] transition-colors duration-300">
+                  GET ESTIMATE <ArrowRight className="w-3 h-3" />
+                </div>
+              </Link>
+            </div>
+
+            {/* Secondary links */}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                ["PRICING", "/pricing"],
+                ["OUR DATA", "/data"],
+                ["ABOUT", "/about"],
+                ["FAQ", "/faq"],
+              ].map(([label, href]) => (
+                <ExploreLink key={label} label={label} href={href} />
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
@@ -474,8 +528,8 @@ export default function Home() {
           >
             SolarInsight
           </Link>
-          <p className="font-mono text-[11px] text-white/30 tracking-widest">
-            © 2025 SOLARINSIGHT LLC · ARLINGTON, VA
+          <p className="font-mono text-[11px] text-white/70 tracking-widest">
+            © 2025 SOLARINSIGHT LLC · Maryland, DC, Virginia
           </p>
           <button
             onClick={() => setBookOpen(true)}

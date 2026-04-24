@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import BookAuditModal from "../components/BookAuditModal";
 import Footer from "../components/Footer";
@@ -112,12 +113,20 @@ export default function Services() {
           </p>
         </Reveal>
         <Reveal delay={0.3}>
-          <button
-            onClick={() => setBookOpen(true)}
-            className="mt-12 bg-white text-black font-mono text-xs font-bold tracking-widest px-14 py-5 hover:bg-[#4ADE80] transition-colors duration-300"
-          >
-            BOOK A FREE AUDIT
-          </button>
+          <div className="mt-12 flex flex-col items-center gap-4">
+            <button
+              onClick={() => setBookOpen(true)}
+              className="bg-white text-black font-mono text-xs font-bold tracking-widest px-14 py-5 hover:bg-[#4ADE80] transition-colors duration-300"
+            >
+              BOOK A FREE AUDIT
+            </button>
+            <Link
+              to="/estimate"
+              className="font-mono text-xs tracking-widest font-bold text-white/85 hover:text-white transition-colors duration-300"
+            >
+              GET A FREE ESTIMATE →
+            </Link>
+          </div>
         </Reveal>
       </div>
 
@@ -194,14 +203,24 @@ export default function Services() {
                   </p>
                 </Reveal>
               </div>
-              <Reveal delay={0.2}>
-                <button
-                  onClick={() => setBookOpen(true)}
-                  className="shrink-0 bg-white text-black font-mono text-xs font-bold tracking-widest px-8 py-4 hover:bg-[#4ADE80] transition-colors duration-300"
-                >
-                  BOOK FREE AUDIT
-                </button>
-              </Reveal>
+              <div className="grid gap-4">
+                <Reveal delay={0.2}>
+                  <button
+                    onClick={() => setBookOpen(true)}
+                    className="shrink-0 bg-white text-black font-mono text-xs font-bold tracking-widest px-8 py-4 hover:bg-[#4ADE80] transition-colors duration-300"
+                  >
+                    BOOK FREE AUDIT
+                  </button>
+                </Reveal>
+                <Reveal delay={0.2}>
+                  <Link
+                    to="/estimate"
+                    className="shrink-0 items-center text-center text-white font-mono text-xs font-bold tracking-widest px-4 py-4 hover:bg-black/40 transition-colors duration-300"
+                  >
+                    GET FREE ESTIMATE →
+                  </Link>
+                </Reveal>
+              </div>
             </div>
           </Reveal>
         </div>

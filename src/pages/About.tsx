@@ -38,9 +38,9 @@ export default function About() {
               ABOUT
             </ShinyText>
             <h1 className="mt-4 text-[clamp(2.5rem,6vw,5rem)] font-medium text-white tracking-tight leading-[1.05]">
-              Built in Arlington.
+              Built in Fairfax.
               <br />
-              For Arlington.
+              Serving the DMV.
             </h1>
           </Reveal>
 
@@ -50,9 +50,9 @@ export default function About() {
               <div className="flex flex-col gap-6 text-white/60 text-[15px] leading-relaxed">
                 <p>
                   SolarInsight was founded by a team of engineers and energy
-                  analysts who noticed the same problem across Northern Virginia
-                  neighborhoods: homeowners were investing $20,000–$30,000 in
-                  solar systems and then doing almost nothing to maintain them.
+                  analysts who noticed the same problem across DMV neighborhoods:
+                  homeowners were investing $20,000–$30,000 in solar systems and
+                  then doing almost nothing to maintain them.
                 </p>
                 <p>
                   We built a company around the data first. Before we sold a
@@ -74,7 +74,7 @@ export default function About() {
                 {[
                   {
                     label: "Founded",
-                    value: <CountUp to={2021} duration={1.5} />,
+                    value: <CountUp to={2026} duration={1.5} />,
                   },
                   {
                     label: "Sites monitored",
@@ -86,7 +86,7 @@ export default function About() {
                   },
                   {
                     label: "Service area",
-                    value: "Arlington · Alexandria · Fairfax",
+                    value: "Virginia · Maryland · DC",
                   },
                   { label: "Guarantee", value: "100% money-back" },
                 ].map(({ label, value }) => (
@@ -111,9 +111,9 @@ export default function About() {
                 OUR MISSION
               </ShinyText>
               <blockquote className="text-[clamp(1.3rem,2.5vw,2rem)] font-medium text-white leading-[1.2]">
-                "Every solar system in Northern Virginia should be performing at
-                its peak — and every homeowner should know exactly how theirs is
-                doing."
+                "Every solar system across Virginia, Maryland, and DC should be
+                performing at its peak — and every homeowner should know exactly
+                how theirs is doing."
               </blockquote>
             </div>
           </Reveal>

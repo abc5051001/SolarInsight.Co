@@ -5,10 +5,10 @@ import BookAuditModal from "./BookAuditModal";
 
 const NAV_LINKS = [
   ["SERVICES", "/services"],
+  ["ESTIMATE", "/estimate"],
+  ["ABOUT US", "/about"],
   ["PRICING", "/pricing"],
   ["OUR DATA", "/data"],
-  ["ABOUT US", "/about"],
-  ["ESTIMATE", "/estimate"],
   ["FAQ", "/faq"],
 ];
 

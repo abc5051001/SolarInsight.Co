@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import BookAuditModal from "../components/BookAuditModal";
@@ -14,6 +16,7 @@ interface SolarPotential {
   electricity_rate: number;
   rate_source: string;
   soiling_rate: number;
+  solar_percentage: number | null;
   soiling_kwh_lost: number;
   soiling_dollar_lost: number;
   yearly_soiling: number[];
@@ -189,7 +192,10 @@ export default function Estimate() {
                     ${sp.lifetime_soiling_usd.toLocaleString()}
                   </p>
                   <p className="text-white/40 text-sm mt-1">
-                    That's <span className="text-white">${sp.soiling_dollar_lost}/yr</span> in lost electricity production from your {sp.system_kw} kW system — money your panels are generating but soiling is stealing.
+                    {sp.solar_percentage == null
+                      ? <>That's <span className="text-white">${sp.soiling_dollar_lost}/yr</span> in lost electricity production from your {sp.system_kw} kW system — money your panels are generating but soiling is stealing.</>
+                      : <>Your {sp.system_kw} kW system covers <span className="text-white">{sp.solar_percentage}%</span> of your home's electricity. Soiling is stealing <span className="text-white">${sp.soiling_dollar_lost}/yr</span> of that production.</>
+                    }
                   </p>
                   <p className="font-mono text-[10px] text-white/25 tracking-widest mt-2">
                     {sp.rate_source === "user_rate" ? "YOUR RATE" : "REGIONAL AVERAGE RATE"} · {result?.address}
@@ -209,6 +215,33 @@ export default function Estimate() {
                   <MiniStat label="ANNUAL PRODUCTION" value={`${sp.annual_kwh.toLocaleString()} kWh`} />
                   <MiniStat label="LOST TO SOILING" value={`${sp.soiling_kwh_lost.toLocaleString()} kWh`} accent />
                   <MiniStat label="SOILING RATE" value={`${soilingPct}% / yr`} />
+                </div>
+
+                {/* Calculation breakdown */}
+                <div className="px-8 py-6 border-b border-white/10 flex flex-col gap-4">
+                  <p className="font-mono text-[10px] tracking-widest text-white/40">HOW WE CALCULATED THIS</p>
+                  <div className="flex flex-col divide-y divide-white/8">
+                    <CalcStep
+                      label="Google Solar API — annual AC production"
+                      detail={`${sp.annual_kwh.toLocaleString()} kWh/yr`}
+                      note="Inverter losses already deducted"
+                    />
+                    <CalcStep
+                      label={`× ${soilingPct}% soiling rate (NoVA avg)`}
+                      detail={`${sp.soiling_kwh_lost.toLocaleString()} kWh stolen`}
+                      note="Heavy pollen + summer dust"
+                    />
+                    <CalcStep
+                      label={`× $${sp.electricity_rate}/kWh${sp.rate_source === "user_rate" ? " (your rate)" : " (regional avg)"}`}
+                      detail={`$${sp.soiling_dollar_lost}/yr`}
+                      note="Dollar value of lost production"
+                    />
+                    <CalcStep
+                      label="× 5.6%/yr inflation — compounded 20 years"
+                      detail={`$${sp.lifetime_soiling_usd.toLocaleString()} lifetime`}
+                      note="Dominion Energy NoVA rate 2020–2024"
+                    />
+                  </div>
                 </div>
 
                 {/* Soiling cost trend chart */}
@@ -324,6 +357,17 @@ export default function Estimate() {
                   </div>
                 </div>
 
+                {/* Services cross-link */}
+                <div className="px-8 py-5 border-t border-white/10 flex items-center justify-between gap-4">
+                  <p className="text-white/40 text-[13px]">Want to know what we do on every visit?</p>
+                  <Link
+                    to="/services"
+                    className="shrink-0 flex items-center gap-2 font-mono text-[11px] tracking-widest text-white/55 hover:text-white transition-colors duration-300"
+                  >
+                    VIEW SERVICES <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
+
               </div>
             </Reveal>
           )}
@@ -332,6 +376,26 @@ export default function Estimate() {
 
       <Footer onBookAudit={() => setBookOpen(true)} />
       <BookAuditModal open={bookOpen} onClose={() => setBookOpen(false)} />
+    </div>
+  );
+}
+
+function CalcStep({
+  label,
+  detail,
+  note,
+}: {
+  readonly label: string;
+  readonly detail: string;
+  readonly note: string;
+}) {
+  return (
+    <div className="flex items-start justify-between gap-4 py-3">
+      <div className="flex flex-col gap-0.5">
+        <p className="font-mono text-[11px] text-white/60">{label}</p>
+        <p className="font-mono text-[10px] text-white/25">{note}</p>
+      </div>
+      <p className="font-mono text-[12px] text-white shrink-0">{detail}</p>
     </div>
   );
 }

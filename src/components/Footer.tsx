@@ -7,7 +7,9 @@ interface Props {
 
 export default function Footer({ onBookAudit, transparent }: Props) {
   return (
-    <footer className={`border-t border-white/8 py-12 px-6 ${transparent ? "bg-transparent" : "bg-black"}`}>
+    <footer
+      className={`border-t border-white/8 py-12 px-6 ${transparent ? "bg-transparent" : "bg-black"}`}
+    >
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <Link
           to="/"
@@ -16,8 +18,8 @@ export default function Footer({ onBookAudit, transparent }: Props) {
         >
           SolarInsight
         </Link>
-        <p className="font-mono text-[11px] text-white/30 tracking-widest">
-          © 2025 SOLARINSIGHT LLC · ARLINGTON, VA
+        <p className="font-mono text-[11px] text-white/70 tracking-widest">
+          © 2025 SOLARINSIGHT LLC · Maryland, DC, Virginia
         </p>
         <button
           onClick={onBookAudit}
