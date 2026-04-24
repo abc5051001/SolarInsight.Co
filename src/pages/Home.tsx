@@ -338,7 +338,7 @@ export default function Home() {
                     <br />
                     Matters
                   </h3>
-                  <p className="text-[15px] text-white/80 leading-relaxed">
+                  <p className="text-[15px] text-white/80 leading-relaxed max-w-xs">
                     Dirty panels cause hot-spot degradation, accelerate PID
                     failure, and can void your warranty. Neglect documentably
                     makes panels degrade faster.
@@ -354,7 +354,7 @@ export default function Home() {
                     <br />
                     Local Knowledge
                   </h3>
-                  <p className="text-[15px] text-white/80 leading-relaxed">
+                  <p className="text-[15px] text-white/80 leading-relaxed max-w-xs">
                     We track seasonal pollen cycles, pollution patterns, and
                     weather data across the DMV — so every recommendation we
                     make is specific to this region, not generic advice.
