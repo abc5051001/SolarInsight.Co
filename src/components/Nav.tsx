@@ -7,6 +7,7 @@ const NAV_LINKS = [
   ["SERVICES", "/services"],
   ["PRICING", "/pricing"],
   ["OUR DATA", "/data"],
+  ["ABOUT US", "/about"],
   ["ESTIMATE", "/estimate"],
   ["FAQ", "/faq"],
 ];
@@ -93,7 +94,11 @@ export default function Nav() {
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -8 }}
-                  transition={{ duration: 0.2, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{
+                    duration: 0.2,
+                    delay: i * 0.04,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
                 >
                   <Link
                     to={href}
@@ -108,7 +113,11 @@ export default function Nav() {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -8 }}
-                transition={{ duration: 0.2, delay: NAV_LINKS.length * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.2,
+                  delay: NAV_LINKS.length * 0.04,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 className="mt-2 bg-black text-white py-4 font-mono text-xs font-bold tracking-widest hover:bg-gray-800 transition-colors rounded-lg"
                 onClick={() => {
                   setMenuOpen(false);
